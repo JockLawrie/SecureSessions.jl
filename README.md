@@ -1,6 +1,7 @@
 # SecureSessions
 
 [![Build Status](https://travis-ci.org/JockLawrie/SecureSessions.jl.svg?branch=master)](https://travis-ci.org/JockLawrie/SecureSessions.jl)
+[![codecov.io](http://codecov.io/github/JockLawrie/SecureSessions.jl/coverage.svg?branch=master)](http://codecov.io/github/JockLawrie/SecureSessions.jl?branch=master)
 
 
 ## Functionality
