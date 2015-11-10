@@ -11,3 +11,5 @@ notifications:
 script:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
   - julia -e 'Pkg.clone(pwd()); Pkg.build("SecureSessions"); Pkg.test("SecureSessions"; coverage=true)'
+after_success:
+  - julia -e 'cd(Pkg.dir("SecureSessions")); Pkg.add("Coverage"); using Coverage; Codecov.submit(process_folder())'
