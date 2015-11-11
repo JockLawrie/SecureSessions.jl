@@ -23,11 +23,9 @@ end
 """
 Returns true if hash(password) == stored hashed password.
 
-
 The algorithm:
-1) Retrieve username's salt and hashed password from io.
-2) Compute hash(salt, password)
-3) Return true if hash(password) == stored hashed password
+1) Compute hash(salt, password), where the salt is supplied in a StoredPassword.
+2) Return true if hash(password) == stored hashed password
 """
 function password_is_valid(password::AbstractString, sp::StoredPassword)
     result = false
