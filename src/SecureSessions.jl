@@ -8,7 +8,9 @@ using MbedTLS
 export
 # Secure cookies
     create_secure_session_cookie,
-    get_session_cookie_data
+    get_session_cookie_data,
+# utils
+    username_is_permissible
 
 
 include("utils.jl")
