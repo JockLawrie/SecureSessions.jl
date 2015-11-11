@@ -9,12 +9,19 @@ export
 # Secure cookies
     create_secure_session_cookie,
     get_session_cookie_data,
+# Password hashing
+    StoredPassword,
+    set_password,
+    username_password_are_valid,
 # utils
-    username_is_permissible
+    username_is_permissible,
+    password_is_permissible
 
 
 include("utils.jl")
 include("secure_cookies.jl")
+include("password_hash.jl")
+include("pbkdf2.jl")
 
 
 # Globals

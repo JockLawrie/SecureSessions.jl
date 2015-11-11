@@ -39,3 +39,12 @@ function username_is_permissible(username)
     end
     result
 end
+
+
+"""
+Returns true is password adheres to the following formatting rules:
+1) TODO: To be specified.
+"""
+function password_is_permissible(password)
+    true  # TODO: implement this function
+end
