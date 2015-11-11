@@ -1,6 +1,7 @@
 # Contents: Functions for hashing passwords using PBKDF2.
 
-function pbkdf2(salt, password)
+"Returns the hashed password as Array{UInt8, 1}."
+function pbkdf2(salt::AbstractString, password::AbstractString)
     c = 1000                  # Number of iterations
     dklen = TODO              # Length of derived key
     hlen = TODO    # Length of output of hash function

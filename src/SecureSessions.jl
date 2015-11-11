@@ -11,8 +11,7 @@ export
     get_session_cookie_data,
 # Password hashing
     StoredPassword,
-    set_password,
-    username_password_are_valid,
+    password_is_valid,
 # utils
     username_is_permissible,
     password_is_permissible
