@@ -3,8 +3,22 @@ using Base.Test
 using HttpServer
 using Requests
 
+
 ##################################################
-### Set up
+### Test username and password permissibility
+username1 = "John Smith"
+username2 = "<script>do_something_terrible();</script>"
+@test  username_is_permissible(username1)
+@test !username_is_permissible(username2)
+
+password1 = "v@l1d_pasSw0rd"
+password2 = "bad_password"
+@test  password_is_permissible(password1)
+@test !password_is_permissible(password2)
+
+
+##################################################
+### Test secure cookies
 
 # Override default globals
 encrypted_sessions_only = false    # Avoids requiring https for this test
@@ -28,9 +42,6 @@ server = Server((req, res) -> app(req))
 @async run(server, port = 8000)
 sleep(1.0)
 
-##################################################
-### The test
-
 # Post data "John Smith", which will be encrypted and included in the "sessionid" cookie.
 username = "John Smith"
 res1     = Requests.post("http://localhost:8000/set_secure_cookie"; data = username)
@@ -40,3 +51,13 @@ res1     = Requests.post("http://localhost:8000/set_secure_cookie"; data = usern
 cookie = res1.cookies["sessionid"]
 res2   = Requests.post("http://localhost:8000/read_cookie"; cookies = [cookie])
 @test bytestring(res2.data) == username
+
+
+##################################################
+### Test password hashing
+#sp = StoredPassword("pwd_alice")
+#@test  password_is_valid("pwd_alice", sp)
+#@test !password_is_valid("pwd_bob",   sp)
+
+
+# EOF
