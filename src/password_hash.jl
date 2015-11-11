@@ -12,7 +12,7 @@ immutable StoredPassword
     salt::Array{UInt8, 1}
     hashed_password::Array{UInt8, 1}
 
-    function StoredPassword(username::AbstractString, password::AbstractString)
+    function StoredPassword(password::AbstractString)
 	salt            = csrng(16)
 	hashed_password = compute_hashed_password(salt, password)
 	new(salt, hashed_password)
