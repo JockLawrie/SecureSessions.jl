@@ -6,7 +6,10 @@ Type for storing user-specific salt and hashed password.
 
 The password is hashed by the constructor using the following algorithm:
 1) Generate a 16 byte (128 bit) salt using a cryptographically secure RNG.
-2) Hash the salted password using PBKDF2.
+2) Hash the salted password using PBKDF2 with:
+    - SHA-512 as the pseudorandom function
+    - 5000 iterations
+    - A 512-bit derived key length
 """
 immutable StoredPassword
     salt::Array{UInt8, 1}
@@ -38,8 +41,8 @@ end
 
 
 "Selects and applies the password hashing algorithm."
-function compute_hashed_password(salt::AbstractString, password::AbstractString)
-    pbkdf2(salt, password)
+function compute_hashed_password(salt::Array{UInt8, 1}, password::AbstractString)
+    pbkdf2(salt, password, 5000, 64)    # 5000 iterations; dklen = 64 bytes = 512 bits
 end
 
 

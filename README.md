@@ -6,11 +6,15 @@
 
 ## Functionality
 - Encrypted, tamper-proof cookies; used primarily for stateless secure sessions.
+- Password hashing; used for login.
 
 
 ## Usage
-A basic example is in test/runtests.jl.
-A more advanced example can be found [here](https://bitbucket.org/jocklawrie/skeleton-webapp.jl) (see Example 5).
+Basic examples are in test/runtests.jl.
+
+[This repo](https://bitbucket.org/jocklawrie/skeleton-webapp.jl) contains example web applications:
+	- Example 5 demonstrates secure cookies.
+	- Example 6 uses password hashing for login and secure cookies for encrypted tamper-proof sessions.
 
 
 ## Security Protocols

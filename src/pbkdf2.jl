@@ -1,34 +1,42 @@
 # Contents: Functions for hashing passwords using PBKDF2.
 
-"Returns the hashed password as Array{UInt8, 1}."
-function pbkdf2(salt::AbstractString, password::AbstractString)
-    c = 1000                  # Number of iterations
-    dklen = TODO              # Length of derived key
-    hlen = TODO    # Length of output of hash function
-
+"""
+Returns the hashed password as Array{UInt8, 1}.
+"""
+function pbkdf2(salt::Array{UInt8, 1}, password::AbstractString, niter::Int64, dklen::Int64)
+    hlen = 64                    # Length of output of hash function in bytes (SHA512 >> length = 512 bits = 64 bytes)
+    assert(dklen % hlen == 0)    # Assert dklen is divisible by hlen
+    assert(niter >= 1000)
     derived_key = zeros(UInt8, dklen)
-    nblocks = convert(Int, round(dklen / hlen))
+    nblocks     = convert(Int, round(dklen / hlen))
     for i = 1:nblocks
-        result_i = pbkdf2_block(password, salt, c, i)
-	offset = (i - 1) * blocksize
-	for j = 1:blocksize    # Copy result_i to result
-	    result[offset + j] = result_i[j]
+        dk_block_i = pbkdf2_block(salt, password, niter, i)    # dk_block_i has length hlen
+
+	# Copy i^th block to result
+	offset = (i - 1) * hlen
+	for j = 1:hlen
+	    derived_key[offset + j] = dk_block_i[j]
 	end
     end
     derived_key
 end
 
 
-function pbkdf2_block(password, salt, c, i)
-    # Compute the i^th block of the derived key
-    data = salt * string(hton(convert(Int32, i)))
-    U1 = digest("sha256", password, data)
-    U2 = digest("sha256", password, U1)
+"""
+Compute the i^th block of the derived key.
+Uses SHA512 as the pseudorandom function.
+"""
+function pbkdf2_block(salt, password, niter, i)
+    key    = password
+    U0     = vcat(salt, num_to_bytearray(hton(Int32(i))))    # Length = 20 bytes = vcat(16 byte salt, 4 byte bigendian integer) 
+    U1     = digest(MD_SHA, U0, key)                         # MD_SHA == SHA512
+    U2     = digest(MD_SHA, U1, key)
     result = U1 $ U2
-    U = U2
-    for j = 3:c
-        U = digest("sha256", password, U)
-	result = U $ result
+    Ujm1   = U2    # U_(j-1)
+    for j = 3:niter
+	Uj      = digest(MD_SHA, Ujm1, key)
+	result $= Uj
+	Ujm1    = Uj
     end
     result
 end

@@ -11,16 +11,6 @@ end
 
 
 """
-Returns: Milliseconds since the epoch.
-
-Takes 13 characters (valid until some time around the year 2287).
-"""
-function get_timestamp()
-    1000 * convert(Int, Dates.datetime2unix(now()))
-end
-
-
-"""
 Returns true if username adheres to the following formatting rules:
 1) length(username) <= 20
 2) username contains none of the following tags:
@@ -61,13 +51,12 @@ function password_is_permissible(password)
     r5   = false
     r6   = false
     for i = 1:n
-	c     = uniq[i]
-	c_int = Int(c)
-	if c == uppercase(c)
+	c     = Int(uniq[i])    # Integer representation of Char
+	if c >= 65 && c <= 90
 	    r3 = true
-	elseif c == lowercase(c)
+	elseif c >= 97 && c <= 122
 	    r4 = true
-	elseif c_int >= 48 && c_int <= 57
+	elseif c >= 48 && c <= 57
 	    r5 = true
 	else
 	    r6 = true
@@ -81,3 +70,28 @@ function password_is_permissible(password)
     end
     result
 end
+
+
+"""
+Returns: Milliseconds since the epoch.
+
+Takes 13 characters (valid until some time around the year 2287).
+"""
+function get_timestamp()
+    1000 * convert(Int, Dates.datetime2unix(now()))
+end
+
+
+"""
+Convert number to byte array.
+The implementation is a modified version of that found in Stack Overflow question 3076680.
+"""
+function num_to_bytearray(x)
+    io = IOBuffer()
+    write(io, x)
+    seekstart(io)
+    readbytes(io)
+end
+
+
+### EOF

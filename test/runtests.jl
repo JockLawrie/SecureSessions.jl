@@ -55,9 +55,9 @@ res2   = Requests.post("http://localhost:8000/read_cookie"; cookies = [cookie])
 
 ##################################################
 ### Test password hashing
-#sp = StoredPassword("pwd_alice")
-#@test  password_is_valid("pwd_alice", sp)
-#@test !password_is_valid("pwd_bob",   sp)
+sp = StoredPassword("pwd_alice")
+@test  password_is_valid("pwd_alice", sp)
+@test !password_is_valid("pwd_bob",   sp)
 
 
 # EOF
