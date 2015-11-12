@@ -107,17 +107,16 @@ Returns "" if the cookie doesn't exist.
 function get_cookie_value(req, cookie_name)
     cookie_value = ""
     ckie         = req.headers["Cookie"]    # ASCIIString: "name1=value1; name2=value2"
-    names_values = split(ckie, "=")
-    idx          = findfirst(names_values, cookie_name)
-    if idx > 0
-	cookie_value = names_values[idx + 1]
-	if contains(cookie_value, ";")    # Remove trailing "; nextname"
-	    idx          = search(cookie_value, ";")[1]
-	    cookie_value = cookie_value[1:(idx - 1)]    # -1 to exclude ";"
+    names_values = split(ckie, ";")         # "name=value"
+    for nv in names_values
+	r = search(nv, cookie_name)         # first_idx:last_idx
+	if length(r) > 0                    # cookie_name is in nv
+	    r2           = search(nv, "=")
+	    cookie_value = nv[(r2[1] + 1):end]
+	    break
 	end
-	cookie_value = convert(ASCIIString, cookie_value)    # Convert SubString to string for base64 decoding
     end
-    cookie_value
+    convert(ASCIIString, cookie_value)      # Convert SubString to string for base64 decoding
 end
 
 
