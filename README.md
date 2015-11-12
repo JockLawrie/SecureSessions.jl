@@ -16,6 +16,8 @@ Basic examples are in test/runtests.jl.
 - Example 5 demonstrates secure cookies.
 - Example 6 uses password hashing for login and secure cookies for encrypted tamper-proof sessions.
 
+See ``docs/outline`` for a description of these examples.
+
 
 ## Security Protocols
 For the current status of the security protocols used see [this doc](https://github.com/JockLawrie/SecureSessions.jl/blob/master/docs/security_protocols.md).

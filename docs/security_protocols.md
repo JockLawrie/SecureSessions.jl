@@ -28,6 +28,7 @@ Each session cookie is created as follows:
 ## Password Hashing
 
 A given password is hashed using the following algorithm:
+
 1. Generate a 16 byte (128 bit) salt using a cryptographically secure RNG.
 2. Hash the salted password using PBKDF2 with:
 	- SHA-512 as the pseudorandom function
