@@ -4,6 +4,10 @@
 [![codecov.io](http://codecov.io/github/JockLawrie/SecureSessions.jl/coverage.svg?branch=master)](http://codecov.io/github/JockLawrie/SecureSessions.jl?branch=master)
 
 
+## WARNING
+**The security of this implementation has not been reviewd by a security professional. Use at your own risk.**
+
+
 ## Functionality
 - Encrypted, tamper-proof cookies; used primarily for stateless secure sessions.
 - Password hashing; used for login.
