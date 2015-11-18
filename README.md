@@ -24,7 +24,7 @@ Basic examples are in test/runtests.jl.
 
 [This repo](https://bitbucket.org/jocklawrie/skeleton-webapp.jl) contains example web applications:
 - Example 5 demonstrates secure cookies.
-- Example 6 uses password hashing for login and secure cookies for encrypted tamper-proof sessions.
+- Example 6 uses password hashing for login as well as secure cookies.
 
 See ``docs/outline`` for a description of these examples.
 
