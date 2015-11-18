@@ -4,7 +4,7 @@ This page describes the current security protocols for SecureSessoins.jl.
 
 As the author is not a security professional, suggestions from security professionals are very welcome.
 
-**Warning: The security of this package has not been reviewd by a security professional. Use at your own risk.**
+**Warning: The security of this package has not been reviewed by a security professional. Use at your own risk.**
 
 
 ## Secure Cookies

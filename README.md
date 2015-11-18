@@ -5,7 +5,7 @@
 
 
 ## WARNING
-**The security of this implementation has not been reviewd by a security professional. Use at your own risk.**
+**The security of this implementation has not been reviewed by a security professional. Use at your own risk.**
 
 
 ## Functionality
