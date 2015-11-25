@@ -30,6 +30,9 @@ See ``docs/outline`` for a description of these examples.
 
 ## API
 ```julia
+Pkg.clone("https://github.com/JockLawrie/SecureSessions.jl.git")
+using SecureSessions
+
 ##########################
 ### Secure cookies
 ##########################
