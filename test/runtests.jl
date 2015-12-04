@@ -1,6 +1,7 @@
 using SecureSessions
 using Base.Test
 using HttpServer
+using URIParser
 using Requests
 
 
@@ -26,10 +27,11 @@ encrypted_sessions_only = false    # Avoids requiring https for this test
 # Define app
 function app(req::Request)
     res = Response()
-    if req.resource == "/set_secure_cookie"
+    uri = URI(req.resource)
+    if uri.path == "/set_secure_cookie"
 	data = bytestring(req.data)
 	create_secure_session_cookie(data, res, "sessionid")
-    elseif req.resource == "/read_cookie"
+    elseif uri.path == "/read_cookie"
         res.data = get_session_cookie_data(req, "sessionid")
     else
 	res.status = 404
