@@ -16,7 +16,7 @@ Each session cookie is created as follows:
 - encrypted_session_key   = AES CBC encrypt(const_key, const_iv, session_key)
 - data blob               = AES CBC encrypt(session_key, session_iv, arbitrary data)
 - hmac signature          = HMAC(session_key, timestamp * data_blob)
-- unencoded cookie_value  = session_iv * encrypted_secret_key * hmac signature * timestamp * data blob
+- unencoded cookie_value  = session_iv * encrypted_session_key * hmac signature * timestamp * data blob
 - cookie_value            = base64encode(unencoded cookie value)...the encoding is for transport in an http header.
 
 ##### TODO:
