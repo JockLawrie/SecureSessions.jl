@@ -24,20 +24,21 @@ end
 
 
 """
-Returns true if hash(password) == stored hashed password.
+Returns true if hash(salt * password) == stored hashed password.
 
 The algorithm:
 1) Compute hash(salt, password), where the salt is supplied in a StoredPassword.
 2) Return true if hash(password) == stored hashed password
 """
-function password_is_valid(password::AbstractString, sp::StoredPassword)
+function password_is_valid(password::AbstractString, salt::Vector{UInt8}, hashed_pwd::Vector{UInt8})
     result = false
-    hp     = compute_hashed_password(sp.salt, password)
-    if hp == sp.hashed_password
+    hp     = compute_hashed_password(salt, password)
+    if hp == hashed_pwd
 	result = true
     end
     result
 end
+password_is_valid(password::AbstractString, sp::StoredPassword) = password_is_valid(password, sp.salt, sp.hashed_password)
 
 
 "Selects and applies the password hashing algorithm."
