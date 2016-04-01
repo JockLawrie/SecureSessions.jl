@@ -9,6 +9,7 @@ export
 # Secure cookies
     create_secure_session_cookie,
     get_session_cookie_data,
+    invalidate_session_cookie!,
 # Password hashing
     StoredPassword,
     password_is_valid,

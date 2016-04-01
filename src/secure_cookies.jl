@@ -155,3 +155,15 @@ function session_cookie_is_valid(cookie_value)
     end
     cookie_is_valid, data_blob, session_key, session_iv
 end
+
+
+"""
+Invalidates the 'sessionid' cookie.
+Curently this works by setting the Max-Age to 0.
+"""
+function invalidate_session_cookie!(res)
+    setcookie!(res, "sessionid", utf8(""), Dict("Max-Age" => utf8("0")))
+end
+
+
+# EOF
