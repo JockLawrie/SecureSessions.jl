@@ -158,11 +158,11 @@ end
 
 
 """
-Invalidates the 'sessionid' cookie.
+Invalidates the cookie with name == cookie_name.
 Curently this works by setting the Max-Age to 0.
 """
-function invalidate_session_cookie!(res)
-    setcookie!(res, "sessionid", utf8(""), Dict("Max-Age" => utf8("0")))
+function invalidate_cookie!(res, cookie_name)
+    setcookie!(res, cookie_name, utf8(""), Dict("Max-Age" => utf8("0")))
 end
 
 
