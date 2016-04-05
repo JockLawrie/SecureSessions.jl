@@ -13,6 +13,7 @@ export
 # Password hashing
     StoredPassword,
     password_is_valid,
+    password_is_valid,
 # utils
     username_is_permissible,
     password_is_permissible
