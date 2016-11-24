@@ -29,7 +29,7 @@ function app(req::Request)
     res = Response()
     uri = URI(req.resource)
     if uri.path == "/set_secure_cookie"
-	data = bytestring(req.data)
+	data = String(copy(req.data))
 	create_secure_session_cookie(data, res, "sessionid")
     elseif uri.path == "/read_cookie"
         res.data = get_session_cookie_data(req, "sessionid")
@@ -52,7 +52,7 @@ res1     = Requests.post("http://localhost:8000/set_secure_cookie"; data = usern
 # Compare the returned data to the data originally encrypted.
 cookie = res1.cookies["sessionid"]
 res2   = Requests.post("http://localhost:8000/read_cookie"; cookies = [cookie])
-@test bytestring(res2.data) == username
+@test String(copy(res2.data)) == username
 
 
 ##################################################

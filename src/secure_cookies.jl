@@ -31,7 +31,7 @@ function create_secure_session_cookie(data, res, cookie_name = "sessionid")
     if http_only
 	attr["HttpOnly"] = ""
     end
-    setcookie!(res, cookie_name, utf8(cookie_value), attr)
+    setcookie!(res, cookie_name, string(cookie_value), attr)
 end
 
 
@@ -39,12 +39,12 @@ end
 Create the value of the secure session cookie.
 
 Input:  Data (ASCIIString) to be embedded in the encrypted cookie value.
-Output: Cookie value (ASCIIString) 
+Output: Cookie value (ASCIIString)
 
 Note: Binary data is base64 encoded for transport in http headers (base64 is more space efficient than hex encoding).
 """
 function create_secure_session_cookievalue(plaintext)
-    # Encrypt data 
+    # Encrypt data
     session_key = csrng(key_length)
     session_iv  = csrng(block_size)
     data_blob   = encrypt(CIPHER_AES, session_key, plaintext, session_iv)    # Encryption is done in CBC mode
@@ -91,7 +91,7 @@ function get_session_cookie_data(req, cookie_name)
 	    cookie_is_valid, data_blob, session_key, session_iv = session_cookie_is_valid(cookie_value)
 	    if cookie_is_valid
 		result = decrypt(CIPHER_AES, session_key, data_blob, session_iv)
-		result = utf8(result)
+		result = String(result)
 	    end
 	end
     end
@@ -116,7 +116,7 @@ function get_cookie_value(req, cookie_name)
 	    break
 	end
     end
-    convert(ASCIIString, cookie_value)      # Convert SubString to string for base64 decoding
+    String(cookie_value)      # Convert SubString to string for base64 decoding
 end
 
 
@@ -135,10 +135,10 @@ function session_cookie_is_valid(cookie_value)
     encrypted_session_key = cookie_value[(offset + 1):(offset + key_length + block_size)]
     session_key    = decrypt(CIPHER_AES, const_key, encrypted_session_key, const_iv)
     offset += key_length + block_size
-    hmac_signature = slice(cookie_value, (offset + 1):(offset + key_length))
+    hmac_signature = view(cookie_value, (offset + 1):(offset + key_length))
     offset += key_length
     ts_uint8       = cookie_value[(offset + 1):(offset + 13)]
-    timestamp      = parse(Int, utf8(ts_uint8))    # Seconds since epoch
+    timestamp      = parse(Int,  String(ts_uint8))    # Seconds since epoch
     offset += 13
     data_blob      = cookie_value[(offset + 1):end]
 
@@ -162,7 +162,7 @@ Invalidates the cookie with name == cookie_name.
 Curently this works by setting the Max-Age to 0.
 """
 function invalidate_cookie!(res, cookie_name)
-    setcookie!(res, cookie_name, utf8(""), Dict("Max-Age" => utf8("0")))
+    setcookie!(res, cookie_name, "", Dict("Max-Age" => "0"))
 end
 
 
