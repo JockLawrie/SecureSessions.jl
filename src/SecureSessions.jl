@@ -31,9 +31,9 @@ key_length      = 32                   # Key length for AES 256-bit cipher in CB
 block_size      = 16                   # IV  length for AES 256-bit cipher in CBC mode
 const_key       = csrng(key_length)    # Symmetric key for encrypting secret_keys (with 256-bit encryption)
 const_iv        = csrng(block_size)    # IV for encrypting secret_keys
-http_only       = true 
+http_only       = true
 encrypted_sessions_only = true
-timeout_str     = utf8(string(convert(Int64, 0.001 * session_timeout)))    # Session timeout in seconds, represented as a string
+timeout_str     = string(convert(Int64, 0.001 * session_timeout))    # Session timeout in seconds, represented as a string
 
 
 end # module

@@ -75,7 +75,7 @@ Returns: Milliseconds since the epoch.
 Takes 13 characters (valid until some time around the year 2287).
 """
 function get_timestamp()
-    1000 * convert(Int, Dates.datetime2unix(now()))
+    Int(round(1000*Dates.datetime2unix(now())))
 end
 
 
@@ -87,7 +87,7 @@ function num_to_bytearray(x)
     io = IOBuffer()
     write(io, x)
     seekstart(io)
-    readbytes(io)
+    read(io)
 end
 
 
